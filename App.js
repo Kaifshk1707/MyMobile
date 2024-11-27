@@ -1,16 +1,10 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-import {View} from 'react-native';
 import React from 'react';
+import {ScrollView, Text, View} from 'react-native';
 import Header from './components/Header';
 import Products from './components/Products';
 
 const App = () => {
-  const data = [
+  const products = [
     {
       id: 1,
       name: 'Motorola 40 neo',
@@ -45,9 +39,12 @@ const App = () => {
 
   return (
     <View>
-      {/* Pass the data as a prop */}
-      <Header data={data} />
-      <Products data={data} />
+      <Header />
+      <ScrollView>
+        {products.map((item) => (
+          <Products key={item.id} data={item} />
+        ))}
+      </ScrollView>
     </View>
   );
 };

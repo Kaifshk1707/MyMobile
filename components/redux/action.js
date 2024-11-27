@@ -1,1 +1,8 @@
-import {ADD_TO_CART} from 'add_to_cart';
+import {ADD_TO_CART} from './constants';
+
+export  const addToCart = (item)=>{
+    return{
+        type:ADD_TO_CART,
+        data:item
+    };
+}
