@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from './redux/action';
+import { addToCart, removeToCart } from './redux/action';
 
 const Products = ({ data }) => {
   const dispatch = useDispatch();
@@ -12,14 +12,19 @@ const Products = ({ data }) => {
     dispatch(addToCart(data));
   };
 
+  const handleRemoveToCart =(data)=>{
+    dispatch(removeToCart(data.name))
+  }
+
   useEffect(()=>{
-    if (cartItems && cartItems.length) {
-      cartItems.forEach((item)=>{
-         if (item.name === data.name) {
-          setAdded(true)
-         }
-      })
-    }
+   let result = cartItems.filter((element)=>{
+    return element.name === data.name
+   });
+   if (result.length) {
+    setAdded(true)    
+   }else{
+    setAdded(false)
+   }
   },[cartItems])
 
   return (
@@ -30,7 +35,7 @@ const Products = ({ data }) => {
         <Text style={styles.productDetails}>Price: ₹{data.price}</Text>
 
     {added ? <TouchableOpacity
-          onPress={() => handleAddToCart(data)}
+          onPress={() => handleRemoveToCart(data)}
           style={styles.addButton}
         >
           <Text style={styles.addButtonText}>Remove to Cart</Text>
